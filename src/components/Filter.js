@@ -1,26 +1,17 @@
 import React from "react";
 
-function Filter(props) {
+function Filter({ handleFilter }) {
   return (
     <div>
       <h4> Filter By Rating </h4>
-      <select
-        placeholder="Filter by average rating"
-        onChange={props.handleFilter}
-      >
+      <select placeholder="Filter by average rating" onChange={handleFilter}>
         <option>No Filter</option>
-        <option value="1">1</option>
-        <option value="2">2</option>
-        <option value="3">3</option>
-        <option value="4">4</option>
-        <option value="5">5</option>
-        <option value="6">6</option>
-        <option value="7">7</option>
-        <option value="8">8</option>
-        <option value="9">9</option>
+        {[...Array(9)].map((_, i) => (
+          <option key={i + 1} value={i + 1}>{i + 1}</option>
+        ))}
       </select>
     </div>
   );
 }
 
-export default Filter
+export default Filter;

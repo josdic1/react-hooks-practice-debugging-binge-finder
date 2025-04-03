@@ -8,7 +8,7 @@ import SelectedShowContainer from "./SelectedShowContainer";
 function App() {
   const [shows, setShows] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
-  const [selectedShow, setSelectedShow] = useState(null);
+  const [selectedShow, setSelectedShow] = useState(null); 
   const [episodes, setEpisodes] = useState([]);
   const [filterByRating, setFilterByRating] = useState("");
 
@@ -37,6 +37,7 @@ function App() {
   }
 
   let displayShows = shows;
+
   if (filterByRating) {
     displayShows = displayShows.filter(
       (s) => (s.rating?.average || 0) >= filterByRating
@@ -55,7 +56,7 @@ function App() {
           {selectedShow && (
             <SelectedShowContainer
               selectedShow={selectedShow}
-              episodes={episodes}
+              episodes={episodes} 
             />
           )}
         </Grid.Column>

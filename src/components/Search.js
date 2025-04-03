@@ -1,16 +1,14 @@
 import React from "react";
 import { Input } from "semantic-ui-react";
 
-function Search(props) {
+function Search({ handleSearch, search }) {
   return (
-    <div>
-      <Input
-        type="text"
-        placeholder="Search"
-        onChange={props.handleSearch}
-        value={props.search}
-      />
-    </div>
+    <Input
+      type="text"
+      placeholder="Search"
+      onChange={handleSearch}
+      value={search}
+    />
   );
 }
 

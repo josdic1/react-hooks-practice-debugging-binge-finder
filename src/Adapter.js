@@ -1,13 +1,14 @@
-class Adapter {
-  static getShows (){
-    fetch("http://api.tvmaze.com/shows")
-    .then(res => res.json())
-  }
+const API = "https://api.tvmaze.com/shows";
 
-  // static getShowEpisodes (showID){
-  //   return fetch(`http://api.tvmaze.com/shows/${showID}/episodes`)
-  //   .then(res => res.json)
-  // }
-}
+const Adapter = {
+  getShows() {
+    return fetch(API).then((res) => res.json());
+  },
+  getShowEpisodes(showId) {
+    return fetch(`https://api.tvmaze.com/shows/${showId}/episodes`).then((res) =>
+      res.json()
+    );
+  },
+};
 
-export default Adapter
+export default Adapter;
