@@ -1,36 +1,16 @@
 import React, { useState } from "react";
-import Episode from "./Components/Episode";
+import Episode from "./Episode.js"
 
-function SelectedShowContainer(props) {
-  const selectedSeason = useState(1);
+function SelectedShowContainer({ selectedShow, episodes }) {
+  const [selectedSeason, setSelectedSeason] = useState(1);
 
-  function mapSeasons() {
-    if (!!props.episodes) {
-      let seasons = props.episodes.map((e) => e.season).unique();
-
-      return seasons.map((s) => {
-        return (
-          <option value={s} key={s}>
-            Season {s}
-          </option>
-        );
-      });
-    }
-  }
-
-  function mapEpisodes() {
-    return props.episodes.map((e) => {
-      if (e.season == selectedSeason) {
-        return <Episode eachEpisode={e} key={e.id} />;
-      }
-    });
-  }
+  const uniqueSeasons = [...new Set(episodes.map(e => e.season))];
 
   function handleSelectionChange(e) {
-    selectedSeason = e.target.value;
+    setSelectedSeason(Number(e.target.value));
   }
 
-  const { selectedShow } = props;
+  const filteredEpisodes = episodes.filter(e => e.season === selectedSeason);
 
   return (
     <div style={{ position: "static" }}>
@@ -40,22 +20,20 @@ function SelectedShowContainer(props) {
       <p>Premiered: {selectedShow.premiered}</p>
       <p>Status: {selectedShow.status}</p>
       <p>Average Rating: {selectedShow.rating.average}</p>
-      <select style={{ display: "block" }} onChange={handleSelectionChange}>
-        {mapSeasons()}
+      
+      <select onChange={handleSelectionChange}>
+        {uniqueSeasons.map(season => (
+          <option key={season} value={season}>
+            Season {season}
+          </option>
+        ))}
       </select>
-      {mapEpisodes()}
+
+      {filteredEpisodes.map(e => (
+        <Episode key={e.id} eachEpisode={e} />
+      ))}
     </div>
   );
 }
 
-export SelectedShowContainer;
-
-Array.prototype.unique = function () {
-  const arr = [];
-  for (let i = 0; i < this.length; i++) {
-    if (!arr.includes(this[i])) {
-      arr.push(this[i]);
-    }
-  }
-  return arr;
-};
+export default SelectedShowContainer;

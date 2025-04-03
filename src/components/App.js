@@ -8,12 +8,12 @@ import SelectedShowContainer from "./SelectedShowContainer";
 function App() {
   const [shows, setShows] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
-  const [selectedShow, setSelectedShow] = useState("");
+  const [selectedShow, setSelectedShow] = useState(null);
   const [episodes, setEpisodes] = useState([]);
   const [filterByRating, setFilterByRating] = useState("");
 
   useEffect(() => {
-    Adapter.getShows().then((shows) => setShows(shows));
+    Adapter.getShows().then(setShows);
   }, []);
 
   useEffect(() => {
@@ -25,9 +25,8 @@ function App() {
   }
 
   function handleFilter(e) {
-    e.target.value === "No Filter"
-      ? setFilterByRating("")
-      : setFilterByRating(e.target.value);
+    const value = e.target.value;
+    setFilterByRating(value === "No Filter" ? "" : value);
   }
 
   function selectShow(show) {
@@ -39,9 +38,9 @@ function App() {
 
   let displayShows = shows;
   if (filterByRating) {
-    displayShows = displayShows.filter((s) => {
-      s.rating.average >= filterByRating;
-    });
+    displayShows = displayShows.filter(
+      (s) => (s.rating?.average || 0) >= filterByRating
+    );
   }
 
   return (
@@ -53,13 +52,11 @@ function App() {
       />
       <Grid celled>
         <Grid.Column width={5}>
-          {!!selectedShow ? (
+          {selectedShow && (
             <SelectedShowContainer
               selectedShow={selectedShow}
-              allEpisodes={episodes}
+              episodes={episodes}
             />
-          ) : (
-            <div />
           )}
         </Grid.Column>
         <Grid.Column width={11}>

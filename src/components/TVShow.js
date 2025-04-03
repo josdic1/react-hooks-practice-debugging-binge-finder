@@ -1,6 +1,6 @@
 import React from "react";
 
-function tvShow() {
+function TVShow(props) {
   return (
     <div>
       <br />
@@ -9,4 +9,4 @@ function tvShow() {
   );
 }
 
-export default tvShow;
+export default TVShow;
